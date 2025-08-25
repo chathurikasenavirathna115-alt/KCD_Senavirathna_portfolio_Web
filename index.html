@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chathurika Senavirathna - UI/UX Designer</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Lines */
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.6), transparent);
+            animation: moveLine 8s linear infinite;
+        }
+
+        .line:nth-child(1) {
+            width: 100%;
+            height: 2px;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .line:nth-child(2) {
+            width: 2px;
+            height: 100%;
+            left: 80%;
+            animation: moveLineVertical 10s linear infinite;
+            animation-delay: -2s;
+        }
+
+        .line:nth-child(3) {
+            width: 100%;
+            height: 2px;
+            top: 60%;
+            animation-delay: -4s;
+        }
+
+        .line:nth-child(4) {
+            width: 2px;
+            height: 100%;
+            left: 20%;
+            animation: moveLineVertical 12s linear infinite;
+            animation-delay: -6s;
+        }
+
+        .line:nth-child(5) {
+            width: 100%;
+            height: 2px;
+            top: 40%;
+            animation-delay: -1s;
+        }
+
+        .line:nth-child(6) {
+            width: 2px;
+            height: 100%;
+            left: 60%;
+            animation: moveLineVertical 9s linear infinite;
+            animation-delay: -3s;
+        }
+
+        @keyframes moveLine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+
+        @keyframes moveLineVertical {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(60px);
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .fade-in-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            animation: fadeInLeft 1s ease-out forwards;
+        }
+
+        .fade-in-right {
+            opacity: 0;
+            transform: translateX(60px);
+            animation: fadeInRight 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+
+        /* Floating animation */
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .float-delay {
+            animation: float 6s ease-in-out infinite;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Glowing effects */
+        .glow {
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .glow-hover:hover {
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+            transform: translateY(-5px);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 4px;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Button animations */
+        .btn-modern {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-modern:hover::before {
+            left: 100%;
+        }
+
+        /* Skill bars */
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 2s ease-in-out;
+            position: relative;
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column !important;
+                text-align: center;
+            }
+            
+            .hero-text {
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                        accent: '#06b6d4',
+                        dark: '#0f172a',
+                        darker: '#020617',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gradient-to-br from-dark via-slate-900 to-darker text-white min-h-screen">
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-dark transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="fade-in-left">
+                    <a href="#home" class="text-2xl font-bold gradient-text">Chathurika Senavirathna</a>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 fade-in-right">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+
+                <button class="md:hidden text-white" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden glass-dark">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#about" class="mobile-nav-link">About</a>
+                <a href="#projects" class="mobile-nav-link">Projects</a>
+                <a href="#skills" class="mobile-nav-link">Skills</a>
+                <a href="#contact" class="mobile-nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="hero-content flex items-center justify-between gap-12">
+                <!-- Text Content -->
+                <div class="hero-text flex-1">
+                    <div class="fade-in-up stagger-1">
+                        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                            Hi, I'm <br>
+                            <span class="gradient-text">Chathurika Senavirathna</span>
+                        </h1>
+                    </div>
+                    <div class="fade-in-up stagger-2">
+                        <h2 class="text-xl md:text-2xl text-slate-300 mb-6">
+                            UI/UX Designer & Creative Visionary
+                        </h2>
+                    </div>
+                    <div class="fade-in-up stagger-3">
+                        <p class="text-lg text-slate-400 mb-8 leading-relaxed max-w-xl">
+                            Crafting extraordinary digital experiences that blend creativity with functionality. 
+                            Transforming ideas into stunning visual stories.
+                        </p>
+                    </div>
+                    <div class="fade-in-up stagger-4 flex flex-col sm:flex-row gap-4">
+                        <button class="btn-modern bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white px-8 py-4 rounded-full font-semibold transition-all duration-300 glow-hover">
+                            <i class="fas fa-rocket mr-2"></i>View My Work
+                        </button>
+                        <button class="btn-modern border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-full font-semibold transition-all duration-300">
+                            <i class="fas fa-download mr-2"></i>Download CV
+                        </button>
+                    </div>
+                    <div class="fade-in-up stagger-5 flex space-x-6 mt-8">
+                        <a href="https://www.linkedin.com/in/chathurika-senavirathna-797861367?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app " class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/chathurikasenavirathna115-alt" class="social-icon">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.facebook.com/share/1JaXN3ShMD/?mibextid=wwXIfr" class="social-icon">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                <!-- Image Content -->
+                <div class="hero-image flex-1 flex justify-center fade-in-right">
+                    <div class="relative">
+                        <div class="w-96 h-96 rounded-3xl overflow-hidden glow float">
+                            <img src="profile.jpg" 
+                                 alt="Chathurika Senavirathna" 
+                                 class="w-full h-full object-cover">
+                        </div>
+                        <!-- Decorative elements -->
+                        <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-primary to-secondary rounded-full opacity-20 float-delay"></div>
+                        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-r from-secondary to-accent rounded-full opacity-20 float"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">About Me</h2>
+                <p class="text-slate-400 text-lg">Passionate about creating meaningful digital experiences</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h3 class="text-3xl font-bold mb-6">Creative Designer from Colombo</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Born and raised in beautiful Sri Lanka, I've been passionate about design since childhood. 
+                        With over 2 years of experience in UI/UX design, I specialize in creating digital experiences 
+                        that not only look stunning but also solve real problems.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed">
+                        My approach combines traditional Sri Lankan aesthetics with modern design principles, 
+                        creating unique and culturally rich digital experiences. I believe in the power of 
+                        storytelling through design.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="glass p-6 rounded-2xl glow-hover transition-all duration-300">
+                            <h4 class="text-2xl font-bold text-primary">10+</h4>
+                            <p class="text-slate-400">Projects Completed</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl glow-hover transition-all duration-300">
+                            <h4 class="text-2xl font-bold text-secondary">2+</h4>
+                            <p class="text-slate-400">Years Experience</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl glow-hover transition-all duration-300">
+                            <h4 class="text-2xl font-bold text-accent">5+</h4>
+                            <p class="text-slate-400">Happy Clients</p>
+                        </div>
+                        <div class="glass p-6 rounded-2xl glow-hover transition-all duration-300">
+                            <h4 class="text-2xl font-bold text-primary">12</h4>
+                            <p class="text-slate-400">Design Awards</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="glass p-8 rounded-3xl">
+                    <h4 class="text-xl font-semibold mb-6">My Expertise</h4>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>UI/UX Design</span>
+                                <span class="text-primary">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Product Design</span>
+                                <span class="text-secondary">88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Brand Identity</span>
+                                <span class="text-accent">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Prototyping</span>
+                                <span class="text-primary">92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="92"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Featured Projects</h2>
+                <p class="text-slate-400 text-lg">Some of my recent work and case studies</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="glass rounded-3xl overflow-hidden glow-hover transition-all duration-500 group">
+                    <div class="relative overflow-hidden">
+                        <img src="E-Commerce.png" 
+                             alt="E-commerce" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="flex space-x-3">
+                                <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark hover:scale-110 transition-transform">
+                                    <a href="https://www.figma.com/proto/zDWVaC2aL4bs0nvnrcG68B/practical-03_mobileApp?node-id=1-3&p=f&t=Wa0TAljdvS1usqQM-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </button>
+                                <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark hover:scale-110 transition-transform">
+                                    <a href="https://www.figma.com/proto/zDWVaC2aL4bs0nvnrcG68B/practical-03_mobileApp?node-id=1-3&p=f&t=Wa0TAljdvS1usqQM-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1">
+                                        <i class="fab fa-figma"></i>
+                                    </a>
+                                    
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">E-commerce</h3>
+                        <p class="text-slate-400 mb-4">A modern e-commerce platform celebrating Sri Lankan craftsmanship and culture.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">React</span>
+                            <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-sm">Figma</span>
+                            <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+
+              <!-- Project 2 -->
+                <div class="glass rounded-3xl overflow-hidden glow-hover transition-all duration-500 group">
+                    <div class="relative overflow-hidden">
+                        <img src="LMS.png" 
+                             alt="LMS" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="flex space-x-3">
+                                <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark hover:scale-110 transition-transform">
+                                    <a href="https://www.figma.com/design/z0KpSjyG5oPsvG6K8H6V8J/course-page?node-id=0-1&p=f&t=DkjrRponKlM4S9te-0">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </button>
+                                <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark hover:scale-110 transition-transform">
+                                    <a href="https://www.figma.com/design/z0KpSjyG5oPsvG6K8H6V8J/course-page?node-id=0-1&p=f&t=DkjrRponKlM4S9te-0">
+                                        <i class="fab fa-figma"></i>
+                                    </a>
+                                    
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">LMS Website</h3>
+                        <p class="text-slate-400 mb-4">A web app for managing courses,students,and quizzes.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">React</span>
+                            <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-sm">Figma</span>
+                            <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="glass rounded-3xl overflow-hidden glow-hover transition-all duration-500 group">
+                    <div class="relative overflow-hidden">
+                        <img src="weather.png" 
+                             alt="app" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="flex space-x-3">
+                                <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark hover:scale-110 transition-transform">
+                                    <a href="https://play.google.com/store/apps/details?id=com.weather.nold.forecast&hl=en">
+                                        <i class="fas fa-external-link-alt"></i>
+                                    </a>
+                                </button>
+                                <button class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-dark hover:scale-110 transition-transform">
+                                    <a href="https://play.google.com/store/apps/details?id=com.weather.nold.forecast&hl=en">
+                                        <i class="fab fa-figma"></i>
+                                    </a>
+                                    
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Weather App</h3>
+                        <p class="text-slate-400 mb-4">A Web app that shows real-time weather updates for any city using an API.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">HTML/CSS</span>
+                            <span class="px-3 py-1 bg-secondary/20 text-secondary rounded-full text-sm">Figma</span>
+                            <span class="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">chart.js</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Skills & Tools</h2>
+                <p class="text-slate-400 text-lg">Technologies and tools I work with</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="glass p-8 rounded-3xl text-center glow-hover transition-all duration-300">
+                    <div class="w-20 h-20 bg-gradient-to-r from-primary to-secondary rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-paint-brush text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Design Tools</h3>
+                    <div class="space-y-2 text-slate-400">
+                        <p>Figma</p>
+                        <p>Adobe Creative Suite</p>
+                        <p>Sketch</p>
+                        <p>Framer</p>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-3xl text-center glow-hover transition-all duration-300">
+                    <div class="w-20 h-20 bg-gradient-to-r from-secondary to-accent rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-code text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Frontend</h3>
+                    <div class="space-y-2 text-slate-400">
+                        <p>React</p>
+                        <p>Vue.js</p>
+                        <p>HTML/CSS</p>
+                        <p>JavaScript</p>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-3xl text-center glow-hover transition-all duration-300">
+                    <div class="w-20 h-20 bg-gradient-to-r from-accent to-primary rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-users text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">UX Research</h3>
+                    <div class="space-y-2 text-slate-400">
+                        <p>User Interviews</p>
+                        <p>Usability Testing</p>
+                        <p>Wireframing</p>
+                        <p>Prototyping</p>
+                    </div>
+                </div>
+
+                <div class="glass p-8 rounded-3xl text-center glow-hover transition-all duration-300">
+                    <div class="w-20 h-20 bg-gradient-to-r from-primary to-accent rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-mobile-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Mobile Design</h3>
+                    <div class="space-y-2 text-slate-400">
+                        <p>React Native</p>
+                        <p>Flutter</p>
+                        <p>iOS Design</p>
+                        <p>Android Design</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">Let's Work Together</h2>
+                <p class="text-slate-400 text-lg">Ready to bring your ideas to life? Let's create something amazing!</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <h3 class="text-3xl font-bold mb-6">Get In Touch</h3>
+                    <p class="text-slate-300 leading-relaxed text-lg">
+                        I'm always excited to work on new projects and collaborate with amazing people. 
+                        Whether you need a complete digital transformation or just want to improve 
+                        your existing design, I'm here to help.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center">
+                                <i class="fas fa-envelope text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Email</h4>
+                                <p class="text-slate-400">chathurikasenavirathna115@email.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-xl flex items-center justify-center">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Phone</h4>
+                                <p class="text-slate-400">+94 77 5529 327</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-gradient-to-r from-accent to-primary rounded-xl flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-white"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Location</h4>
+                                <p class="text-slate-400">Mahiyanganaya ,Sri lanka</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <a href="https://www.linkedin.com/in/chathurika-senavirathna-797861367?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="w-12 h-12 bg-gradient-to-r from-primary to-secondary rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform glow-hover">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/chathurikasenavirathna115-alt" class="w-12 h-12 bg-gradient-to-r from-secondary to-accent rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform glow-hover">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.facebook.com/share/1JaXN3ShMD/?mibextid=wwXIfr" class="w-12 h-12 bg-gradient-to-r from-accent to-primary rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform glow-hover">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="glass p-8 rounded-3xl">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">First Name</label>
+                                <input type="text" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300" placeholder="Saman">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Last Name</label>
+                                <input type="text" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300" placeholder="Silva">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300" placeholder="saman@example.com">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Subject</label>
+                            <input type="text" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300" placeholder="Project Collaboration">
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Message</label>
+                            <textarea rows="5" class="w-full px-4 py-3 bg-slate-800/50 border border-slate-600 rounded-xl focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-300 resize-none" placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn-modern bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white py-4 rounded-xl font-semibold transition-all duration-300 glow-hover">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold gradient-text mb-4">Chathurika Senavirathna</h3>
+                <p class="text-slate-400 mb-6">Creating beautiful digital experiences from the Pearl of the Indian Ocean</p>
+                <div class="flex justify-center space-x-6 mb-8">
+                    <a href="https://www.linkedin.com/in/chathurika-senavirathna-797861367?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app " class="text-slate-400 hover:text-primary transition-colors">
+                        <i class="fab fa-linkedin-in text-xl"></i>
+                    </a>
+                    <a href="https://github.com/chathurikasenavirathna115-alt" class="text-slate-400 hover:text-secondary transition-colors">
+                        <i class="fab fa-github text-xl"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/1JaXN3ShMD/?mibextid=wwXIfr" class="text-slate-400 hover:text-accent transition-colors">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                </div>
+                <div class="border-t border-slate-800 pt-8">
+                    <p class="text-slate-500">&copy; 2025 Chathurika Senavirathna. Designed with ❤️ in Sri Lanka</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navbar = document.getElementById('navbar');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    // Close mobile menu if open
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+            } else {
+                navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+            }
+        });
+
+        // Skill bar animations
+        const observeSkills = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBars = entry.target.querySelectorAll('.skill-progress');
+                    progressBars.forEach(bar => {
+                        const width = bar.getAttribute('data-width');
+                        setTimeout(() => {
+                            bar.style.width = width + '%';
+                        }, 300);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const skillsSection = document.getElementById('about');
+        if (skillsSection) {
+            observeSkills.observe(skillsSection);
+        }
+
+        // Social icons functionality
+        document.querySelectorAll('.social-icon').forEach(icon => {
+            icon.className = 'w-12 h-12 bg-slate-800 hover:bg-gradient-to-r hover:from-primary hover:to-secondary rounded-xl flex items-center justify-center text-slate-400 hover:text-white transition-all duration-300 glow-hover';
+        });
+
+        // Contact form handling
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show success message
+            const button = this.querySelector('button[type="submit"]');
+            const originalText = button.innerHTML;
+            
+            button.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.innerHTML = '<i class="fas fa-check mr-2"></i>Message Sent!';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    this.reset();
+                }, 2000);
+            }, 1500);
+        });
+
+        // Add some interactive elements
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.createElement('div');
+            cursor.className = 'fixed w-2 h-2 bg-primary rounded-full pointer-events-none z-50 opacity-50';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.animation = 'fade 0.5s ease-out forwards';
+            
+            document.body.appendChild(cursor);
+            
+            setTimeout(() => {
+                cursor.remove();
+            }, 500);
+        });
+
+        // Add fade animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fade {
+                to { opacity: 0; transform: scale(1.5); }
+            }
+            
+            .nav-link {
+                position: relative;
+                transition: all 0.3s ease;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+            }
+            
+            .nav-link:hover {
+                color: #6366f1;
+                background: rgba(99, 102, 241, 0.1);
+            }
+            
+            .mobile-nav-link {
+                display: block;
+                padding: 0.75rem 1rem;
+                color: #cbd5e1;
+                transition: all 0.3s ease;
+                border-radius: 0.5rem;
+                margin: 0.25rem 0;
+            }
+            
+            .mobile-nav-link:hover {
+                color: #6366f1;
+                background: rgba(99, 102, 241, 0.1);
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
